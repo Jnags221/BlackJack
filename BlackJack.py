@@ -11,3 +11,5 @@ class Cards:
 
     def __str__(self):
         print(f'{self.value} of {self.rank}')
+bob = Cards("Hearts","Three")
+bob.__str__()
