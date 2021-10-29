@@ -204,6 +204,8 @@ class Game():
         self.deck.reset()
 
     def roundGUI(self):
+        pass
 
     def setbet(self, player, amount):
+        pass
         

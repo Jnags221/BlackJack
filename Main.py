@@ -2,12 +2,11 @@ import objectcreation as oc
 
 numrounds = None
 while not numrounds:
-  numrounds_string = input("How many rounds would you like to play?: ")
-  try:
-    numrounds = int(numrounds_string)
-  except:
-    print("Error")
+    numrounds_string = input("How many rounds would you like to play?: ")
+    try:
+        numrounds = int(numrounds_string)
+    except:
+        print("Error")
 
 for i in range(numrounds):
-  oc.game.round()
-
+    oc.game.round()
