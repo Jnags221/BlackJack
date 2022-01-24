@@ -25,13 +25,18 @@ class Menu(tk.Frame):
         # Create menu buttons
 
         title_label = tk.Label(self, text='Nags Gaming')
+        instructions1 = tk.Label(self, text='To play Blackjack please press the button below')
         window_one_button = tk.Button(self, text='BlackJack', command=self.window_one)
         close_button = tk.Button(self, text='Close', command=self.master.destroy)
+        instruction_button = tk.Label(self, text='Press me to see the rules of blackjack!')
 
         # Attach to grid
 
         title_label.grid(row=0, column=0)
-        window_one_button.grid(row=1, column=0)
+        instructions1.grid(row=1, column = 0)
+        window_one_button.grid(row=2, column=0)
+        instruction_button.grid(row=3, column=0)
+
         close_button.grid(row=0, column=0, sticky="nw")
 
         # Describe grid
@@ -39,8 +44,7 @@ class Menu(tk.Frame):
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=1)
-        self.grid_rowconfigure(2, weight=1)
-        self.grid_rowconfigure(3, weight=1)
+
 
         root.geometry("500x300")
 
@@ -139,7 +143,7 @@ class Window_Two(tk.Frame):
 
             card1_image = tk.Label(middle_frame, text='Insert Image Card1', bg='blue', fg='white', font=('Times', 15))
             card2_image = tk.Label(middle_frame, text='Insert Image Card2', bg='blue', fg='white', font=('Times', 15))
-            balance_box = tk.Label(bottom_frame, text=player, bg='blue', fg='white', font=('Times', 15))
+            balance_box = tk.Label(bottom_frame, text='player', bg='blue', fg='white', font=('Times', 15))
             bet_size_box = tk.Label(bottom_frame, text='Insert your betsize', bg='blue', fg='white', font=('Times', 15))
             hit_button = tk.Button(bottom_frame, text='HIT', bg='blue', fg='black', font=('Times', 15))
             double_button = tk.Button(bottom_frame, text='DOUBLE', bg='blue', fg='black', font=('Times', 15))
