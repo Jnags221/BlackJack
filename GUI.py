@@ -1,8 +1,11 @@
 import tkinter as tk
+#import Main as main
+
+
+root = tk.Tk()
+
 
 number_of_players = 1
-
-
 def set_players(val):
     global number_of_players
     number_of_players = (int(val))
@@ -199,10 +202,13 @@ class Window_Two(tk.Frame):
         Window_One(self.master)
 
 
-root = tk.Tk()
+
+
+
 root.geometry("500x300")
 root.resizable(width=0, height=0)
 
 menu = Menu(root)
 
 root.mainloop()
+
