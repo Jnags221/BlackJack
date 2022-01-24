@@ -57,10 +57,12 @@ class Dealer(People):
 
 class Players(People):
 
-    def __init__(self, name, balance=1000):
+    def __init__(self, name, playernum, balance=1000):
         super(Players, self).__init__(name)
+        self.playernum = playernum
         self.balance = balance
         self.bet = 0
+        self.position = 0
 
     def placebet(self, amount):
         if amount <= self.balance:

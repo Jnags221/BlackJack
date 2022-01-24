@@ -1,5 +1,5 @@
 import tkinter as tk
-#import Main as main
+import classcreation as cc
 
 
 root = tk.Tk()
@@ -133,39 +133,42 @@ class Window_Two(tk.Frame):
 
         self.columnconfigure(0, weight=1)
 
+        self.players = []
         for i in range(number_of_players):
-            if i == 0:
-                position = i
-                balance = value_of_balance
-                player = 'Player 1: ' f'{balance}'
+            self.players.append(cc.Players("Player {}".format(i+1), i, value_of_balance))
+
+        for player in self.players:
+            if player.playernum == 0:
+                player.position = 0
             else:
-                position = (i + 1) * 2
-                player_num = i + 1
-                balance = value_of_balance
-                player = f'Player {player_num}: ' f'{balance}'
+                player.position = (player.playernum + 1) * 2
+
+            print(player.position)
+
+
 
             card1_image = tk.Label(middle_frame, text='Insert Image Card1', bg='blue', fg='white', font=('Times', 15))
             card2_image = tk.Label(middle_frame, text='Insert Image Card2', bg='blue', fg='white', font=('Times', 15))
-            balance_box = tk.Label(bottom_frame, text='player', bg='blue', fg='white', font=('Times', 15))
-            bet_size_box = tk.Label(bottom_frame, text='Insert your betsize', bg='blue', fg='white', font=('Times', 15))
+            balance_box = tk.Label(bottom_frame, text=player.name, bg='blue', fg='white', font=('Times', 15))
+            bet_size_box = tk.Label(bottom_frame, text=player.balance, bg='blue', fg='white', font=('Times', 15))
             hit_button = tk.Button(bottom_frame, text='HIT', bg='blue', fg='black', font=('Times', 15))
             double_button = tk.Button(bottom_frame, text='DOUBLE', bg='blue', fg='black', font=('Times', 15))
             stand_button = tk.Button(bottom_frame, text='STAND', bg='blue', fg='black', font=('Times', 15))
             split_button = tk.Button(bottom_frame, text='SPLIT', bg='blue', fg='black', font=('Times', 15))
 
-            card1_image.grid(row=0, column=position, rowspan=20, sticky='news', padx=10, pady=10)
-            card2_image.grid(row=0, column=position + 1, rowspan=20, sticky='news', padx=10, pady=10)
-            balance_box.grid(row=0, column=position, sticky='news', padx=10, pady=10)
-            bet_size_box.grid(row=0, column=position + 1, sticky='news', padx=10, pady=10)
-            hit_button.grid(row=1, column=position, sticky='news', padx=10, pady=10)
-            double_button.grid(row=1, column=position + 1, sticky='news', padx=10, pady=10)
-            stand_button.grid(row=2, column=position, sticky='news', padx=10, pady=10)
-            split_button.grid(row=2, column=position + 1, sticky='news', padx=10, pady=10)
+            card1_image.grid(row=0, column=player.position, rowspan=20, sticky='news', padx=10, pady=10)
+            card2_image.grid(row=0, column=player.position + 1, rowspan=20, sticky='news', padx=10, pady=10)
+            balance_box.grid(row=0, column=player.position, sticky='news', padx=10, pady=10)
+            bet_size_box.grid(row=0, column=player.position + 1, sticky='news', padx=10, pady=10)
+            hit_button.grid(row=1, column=player.position, sticky='news', padx=10, pady=10)
+            double_button.grid(row=1, column=player.position + 1, sticky='news', padx=10, pady=10)
+            stand_button.grid(row=2, column=player.position, sticky='news', padx=10, pady=10)
+            split_button.grid(row=2, column=player.position + 1, sticky='news', padx=10, pady=10)
 
-            bottom_frame.columnconfigure(position, weight=1)
-            bottom_frame.columnconfigure(position + 1, weight=1)
-            middle_frame.columnconfigure(position, weight=1)
-            middle_frame.columnconfigure(position + 1, weight=1)
+            bottom_frame.columnconfigure(player.position, weight=1)
+            bottom_frame.columnconfigure(player.position + 1, weight=1)
+            middle_frame.columnconfigure(player.position, weight=1)
+            middle_frame.columnconfigure(player.position + 1, weight=1)
 
         bottom_frame.rowconfigure(0, weight=1)
         bottom_frame.rowconfigure(1, weight=1)
