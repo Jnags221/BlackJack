@@ -1,11 +1,11 @@
 import tkinter as tk
 import classcreation as cc
 
-
 root = tk.Tk()
 
-
 number_of_players = 1
+
+
 def set_players(val):
     global number_of_players
     number_of_players = (int(val))
@@ -28,15 +28,21 @@ class Menu(tk.Frame):
         # Create menu buttons
 
         title_label = tk.Label(self, text='Nags Gaming')
-        instructions1 = tk.Label(self, text='To play Blackjack please press the button below')
-        window_one_button = tk.Button(self, text='BlackJack', command=self.window_one)
-        close_button = tk.Button(self, text='Close', command=self.master.destroy)
-        instruction_button = tk.Label(self, text='Press me to see the rules of blackjack!')
+        instructions1 = tk.Label(
+            self, text='To play Blackjack please press the button below')
+        window_one_button = tk.Button(self,
+                                      text='BlackJack',
+                                      command=self.window_one)
+        close_button = tk.Button(self,
+                                 text='Close',
+                                 command=self.master.destroy)
+        instruction_button = tk.Label(
+            self, text='Press me to see the rules of blackjack!')
 
         # Attach to grid
 
         title_label.grid(row=0, column=0)
-        instructions1.grid(row=1, column = 0)
+        instructions1.grid(row=1, column=0)
         window_one_button.grid(row=2, column=0)
         instruction_button.grid(row=3, column=0)
 
@@ -47,7 +53,6 @@ class Menu(tk.Frame):
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=1)
-
 
         root.geometry("500x300")
 
@@ -69,12 +74,25 @@ class Window_One(tk.Frame):
         # Create menu buttons
 
         self.title_label = tk.Label(self, text='BlackJack')
-        self.menu_button = tk.Button(self, text='Back To Menu', command=self.menu)
+        self.menu_button = tk.Button(self,
+                                     text='Back To Menu',
+                                     command=self.menu)
         self.balance_val = tk.Label(self, text='Set your starting balance')
-        self.balance_val_slider = tk.Scale(self, from_=100, to=1000, orient=tk.HORIZONTAL, command=set_balance)
+        self.balance_val_slider = tk.Scale(self,
+                                           from_=100,
+                                           to=1000,
+                                           orient=tk.HORIZONTAL,
+                                           bigincrement=10,
+                                           command=set_balance)
         self.num_players = tk.Label(self, text='How many players are there?')
-        self.num_players_slider = tk.Scale(self, from_=1, to=5, orient=tk.HORIZONTAL, command=set_players)
-        self.num_players_button = tk.Button(self, text='Press this Button to Play', command=self.window_two)
+        self.num_players_slider = tk.Scale(self,
+                                           from_=1,
+                                           to=5,
+                                           orient=tk.HORIZONTAL,
+                                           command=set_players)
+        self.num_players_button = tk.Button(self,
+                                            text='Press this Button to Play',
+                                            command=self.window_two)
 
         # Attach to grid
 
@@ -133,9 +151,27 @@ class Window_Two(tk.Frame):
 
         self.columnconfigure(0, weight=1)
 
+        def confirm_bet():
+            # First we reset the sliders
+
+            for slider in self.bet_sliders:
+                slider.grid_forget()
+
+            # TODO incorporate my code to create and shuffle the deck
+
+        deal_button = tk.Button(top_frame, text='DEAL', bg='blue', fg='white', font=('Times', 15),
+                                command=lambda: confirm_bet())
+
+        deal_button.grid(row=0,
+                         column=3,
+                         sticky="e",
+                         )
+
         self.players = []
+        self.bet_sliders = []
         for i in range(number_of_players):
-            self.players.append(cc.Players("Player {}".format(i+1), i, value_of_balance))
+            self.players.append(
+                cc.Players("Player {}".format(i + 1), i, value_of_balance))
 
         for player in self.players:
             if player.playernum == 0:
@@ -143,27 +179,94 @@ class Window_Two(tk.Frame):
             else:
                 player.position = (player.playernum + 1) * 2
 
-            print(player.position)
+            self.bet_sliders.append(
+                tk.Scale(bottom_frame,
+                         from_=10,
+                         to=player.balance,
+                         orient=tk.HORIZONTAL,
+                         bigincrement=10,
+                         command=player.placebet))
 
+            card1_image = tk.Label(middle_frame,
+                                   text='Insert Image Card1',
+                                   bg='blue',
+                                   fg='white',
+                                   font=('Times', 15))
+            card2_image = tk.Label(middle_frame,
+                                   text='Insert Image Card2',
+                                   bg='blue',
+                                   fg='white',
+                                   font=('Times', 15))
+            balance_box = tk.Label(bottom_frame,
+                                   text="{}: {}".format(
+                                       player.name, player.balance),
+                                   bg='blue',
+                                   fg='white',
+                                   font=('Times', 15))
+            # bet_size_box = tk.Label(bottom_frame, text=player.balance, bg='blue', fg='white', font=('Times', 15))
+            hit_button = tk.Button(bottom_frame,
+                                   text='HIT',
+                                   bg='blue',
+                                   fg='black',
+                                   font=('Times', 15))
+            double_button = tk.Button(bottom_frame,
+                                      text='DOUBLE',
+                                      bg='blue',
+                                      fg='black',
+                                      font=('Times', 15))
+            stand_button = tk.Button(bottom_frame,
+                                     text='STAND',
+                                     bg='blue',
+                                     fg='black',
+                                     font=('Times', 15))
+            split_button = tk.Button(bottom_frame,
+                                     text='SPLIT',
+                                     bg='blue',
+                                     fg='black',
+                                     font=('Times', 15))
 
-
-            card1_image = tk.Label(middle_frame, text='Insert Image Card1', bg='blue', fg='white', font=('Times', 15))
-            card2_image = tk.Label(middle_frame, text='Insert Image Card2', bg='blue', fg='white', font=('Times', 15))
-            balance_box = tk.Label(bottom_frame, text=player.name, bg='blue', fg='white', font=('Times', 15))
-            bet_size_box = tk.Label(bottom_frame, text=player.balance, bg='blue', fg='white', font=('Times', 15))
-            hit_button = tk.Button(bottom_frame, text='HIT', bg='blue', fg='black', font=('Times', 15))
-            double_button = tk.Button(bottom_frame, text='DOUBLE', bg='blue', fg='black', font=('Times', 15))
-            stand_button = tk.Button(bottom_frame, text='STAND', bg='blue', fg='black', font=('Times', 15))
-            split_button = tk.Button(bottom_frame, text='SPLIT', bg='blue', fg='black', font=('Times', 15))
-
-            card1_image.grid(row=0, column=player.position, rowspan=20, sticky='news', padx=10, pady=10)
-            card2_image.grid(row=0, column=player.position + 1, rowspan=20, sticky='news', padx=10, pady=10)
-            balance_box.grid(row=0, column=player.position, sticky='news', padx=10, pady=10)
-            bet_size_box.grid(row=0, column=player.position + 1, sticky='news', padx=10, pady=10)
-            hit_button.grid(row=1, column=player.position, sticky='news', padx=10, pady=10)
-            double_button.grid(row=1, column=player.position + 1, sticky='news', padx=10, pady=10)
-            stand_button.grid(row=2, column=player.position, sticky='news', padx=10, pady=10)
-            split_button.grid(row=2, column=player.position + 1, sticky='news', padx=10, pady=10)
+            card1_image.grid(row=0,
+                             column=player.position,
+                             rowspan=20,
+                             sticky='news',
+                             padx=10,
+                             pady=10)
+            card2_image.grid(row=0,
+                             column=player.position + 1,
+                             rowspan=20,
+                             sticky='news',
+                             padx=10,
+                             pady=10)
+            balance_box.grid(row=0,
+                             column=player.position,
+                             sticky='news',
+                             padx=10,
+                             pady=10)
+            self.bet_sliders[player.playernum].grid(row=0,
+                                                    column=player.position + 1,
+                                                    sticky='news',
+                                                    padx=10,
+                                                    pady=10)
+            hit_button.grid(row=1,
+                            column=player.position,
+                            sticky='news',
+                            padx=10,
+                            pady=10)
+            double_button.grid(row=1,
+                               column=player.position + 1,
+                               sticky='news',
+                               padx=10,
+                               pady=10)
+            stand_button.grid(row=2,
+                              column=player.position,
+                              sticky='news',
+                              padx=10,
+                              pady=10)
+            split_button.grid(row=2,
+                              column=player.position + 1,
+                              sticky='news',
+                              padx=10,
+                              pady=10)
 
             bottom_frame.columnconfigure(player.position, weight=1)
             bottom_frame.columnconfigure(player.position + 1, weight=1)
@@ -176,15 +279,44 @@ class Window_Two(tk.Frame):
 
         middle_frame.rowconfigure(0, weight=1)
 
-        menu_button = tk.Button(top_frame, text='Back To Menu', command=self.menu)
-        dealer_name = tk.Label(top_frame, text='Dealer', bg='blue', fg='white', font=('Times', 15))
-        dealer_card1_image = tk.Label(top_frame, text='Insert Image Card1', bg='blue', fg='white', font=('Times', 15))
-        dealer_card2_image = tk.Label(top_frame, text='Insert Image Card2', bg='blue', fg='white', font=('Times', 15))
+        menu_button = tk.Button(top_frame,
+                                text='Back To Menu',
+                                command=self.menu)
+        dealer_name = tk.Label(top_frame,
+                               text='Dealer',
+                               bg='blue',
+                               fg='white',
+                               font=('Times', 15))
+        dealer_card1_image = tk.Label(top_frame,
+                                      text='Insert Image Card1',
+                                      bg='blue',
+                                      fg='white',
+                                      font=('Times', 15))
+        dealer_card2_image = tk.Label(top_frame,
+                                      text='Insert Image Card2',
+                                      bg='blue',
+                                      fg='white',
+                                      font=('Times', 15))
 
         menu_button.grid(row=0, column=0, sticky="nw")
-        dealer_name.grid(row=0, column=1, columnspan=2, sticky="news", padx=10, pady=10)
-        dealer_card1_image.grid(row=1, column=1, rowspan=20, sticky='news', padx=10, pady=10)
-        dealer_card2_image.grid(row=1, column=2, rowspan=20, sticky='news', padx=10, pady=10)
+        dealer_name.grid(row=0,
+                         column=1,
+                         columnspan=2,
+                         sticky="news",
+                         padx=10,
+                         pady=10)
+        dealer_card1_image.grid(row=1,
+                                column=1,
+                                rowspan=20,
+                                sticky='news',
+                                padx=10,
+                                pady=10)
+        dealer_card2_image.grid(row=1,
+                                column=2,
+                                rowspan=20,
+                                sticky='news',
+                                padx=10,
+                                pady=10)
 
         top_frame.rowconfigure(0, weight=1)
         top_frame.rowconfigure(1, weight=1, minsize=210)
@@ -205,13 +337,9 @@ class Window_Two(tk.Frame):
         Window_One(self.master)
 
 
-
-
-
 root.geometry("500x300")
 root.resizable(width=0, height=0)
 
 menu = Menu(root)
 
 root.mainloop()
-

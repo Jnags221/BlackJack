@@ -65,12 +65,10 @@ class Players(People):
         self.position = 0
 
     def placebet(self, amount):
-        if amount <= self.balance:
-            self.bet = 0
-            self.balance -= amount
-            self.bet += amount
-        else:
-            self.bet(int(input("{}, Out of your budget, Enter valid amount: ".format(self.name))))
+        bet = int(amount)
+        self.bet = bet
+        self.balance -= bet
+        self.bet += bet
 
     def double(self, deck):
         self.hit(deck)
@@ -83,8 +81,6 @@ class Players(People):
         else:
             self.balance += 2 * self.bet
 
-
-# This creates the Deck
 
 class Deck():
     def __init__(self):
@@ -204,4 +200,3 @@ class Game():
             playerclear.clearcards()
 
         self.deck.reset()
-        
