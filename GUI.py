@@ -1,5 +1,6 @@
 import tkinter as tk
 import classcreation as cc
+import gettingcard as gc
 from PIL import Image,ImageTk
 
 root = tk.Tk()
@@ -127,6 +128,8 @@ class Hand():
     def __init__(self, player, parent):
         # TODO: Store these tk objects that refer to specfic players in a way that means we can refer to them again later
 
+        image1 = Image.open("cards.png")
+
         self.player = player
 
         print(player.playernum)
@@ -135,7 +138,8 @@ class Hand():
                                     text='Insert Image Card1',
                                     bg='blue',
                                     fg='white',
-                                    font=('Times', 15))
+                                    font=('Times', 15),
+                                    image=None)
 
         self.card2_image = tk.Label(parent.middle_frame,
                                text='Insert Image Card2',
@@ -209,12 +213,19 @@ class Hand():
                           pady=10)
 
     def updateimages(self):
+        card_images = gc.card_snipper()
 
-        self.card1_image.config(text=self.player.cards[0])
-        self.card2_image.config(text=self.player.cards[1])
+        card_images[self.player.cards[0]][0].place(x=self.card1_image.winfo_rootx(), y=self.card1_image.winfo_rooty())
+        card2_xposition = int(self.card1_image.winfo_rootx()) + 79
+        card2_yposition = int(self.card1_image.winfo_rooty())
+        card_images[self.player.cards[1]][0].place(x=card2_xposition, y=card2_yposition)
 
-        # TODO: Change the .config to assign correct image file!
+        # TODO sort out dealer card and then hit etc...
 
+        self.card1_image.destroy()
+        self.card2_image.destroy()
+
+        print(f'Total: {self.player.cardsvalue}')
 
 class Window_Two(tk.Frame):
     def __init__(self, parent):

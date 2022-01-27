@@ -108,18 +108,18 @@ class Deck():
         return self.pack.pop(), self.values.pop()
 
     def reset(self):
-        self.suits = ["Hearts", "Spades", "Diamonds", "Clubs"]
-        self.values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"]
+        self.suits = ["0", "1", "2", "3"]
+        self.values = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"]
 
         # This creates the pack
 
         self.pack = []
         for suit in range(len(self.suits)):
             for value in range(len(self.values)):
-                self.pack.append(self.values[value] + " of " + self.suits[suit])
+                self.pack.append(self.values[value] + " " + self.suits[suit])
 
-        self.values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11, 2, 3, 4,
-                       5, 6, 7, 8, 9, 10, 10, 10, 10, 11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]
+        self.values = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11, 2, 3, 4,
+                       5, 6, 7, 8, 9, 10, 10, 10, 10, 11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 
         self.packvalues = list(zip(self.pack, self.values))
 
