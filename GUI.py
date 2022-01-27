@@ -127,6 +127,10 @@ class Window_Two(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
+        # This is my pack of cards
+
+        self.deck = cc.Deck()
+
         self.configure(background="green")
 
         self.pack(fill=tk.BOTH)
@@ -151,16 +155,8 @@ class Window_Two(tk.Frame):
 
         self.columnconfigure(0, weight=1)
 
-        def confirm_bet():
-            # First we reset the sliders
-
-            for slider in self.bet_sliders:
-                slider.grid_forget()
-
-            # TODO incorporate my code to create and shuffle the deck
-
         deal_button = tk.Button(top_frame, text='DEAL', bg='blue', fg='white', font=('Times', 15),
-                                command=lambda: confirm_bet())
+                                command=self.confirm_bet)
 
         deal_button.grid(row=0,
                          column=3,
@@ -186,6 +182,8 @@ class Window_Two(tk.Frame):
                          orient=tk.HORIZONTAL,
                          bigincrement=10,
                          command=player.placebet))
+
+            # TODO: Store these tk objects that refer to specfic players in a way that means we can refer to them again later
 
             card1_image = tk.Label(middle_frame,
                                    text='Insert Image Card1',
@@ -336,6 +334,22 @@ class Window_Two(tk.Frame):
         self.destroy()
         Window_One(self.master)
 
+    def confirm_bet(self):
+        # First we reset the sliders
+
+        for slider in self.bet_sliders:
+            slider.grid_forget()
+
+        # Create and shuffle the deck
+
+        self.deck.reset()
+
+        # Deal cards to players
+
+        for player in self.players:
+            player.initialcards(self.deck)
+
+        # TODO: Update the GUI to show the players' cards
 
 root.geometry("500x300")
 root.resizable(width=0, height=0)
