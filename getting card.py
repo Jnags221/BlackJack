@@ -18,30 +18,29 @@ for i in range(4):
         label = tkinter.Label(image=test)
         label.image = test
         if i == 0:
-            suit = "Clubs"
+            suit = str(i)
             rank = str(l)
             card = rank + " " + suit
             cards[card] = [label]
         if i == 1:
-            suit = "Diamonds"
+            suit = str(i)
             rank = str(l)
             card = rank + " " + suit
             cards[card] = [label]
         if i == 2:
-            suit = "Hearts"
+            suit = str(i)
             rank = str(l)
             card = rank + " " + suit
             cards[card] = [label]
         if i == 3:
-            suit = "Spades"
+            suit = str(i)
             rank = str(l)
             card = rank + " " + suit
             cards[card] = [label]
 
-cards["10 Clubs"][0].place(x=10, y=100)
+cards["12 1"][0].place(x=10, y=100)
 
+#cards["0-13 0-3"]
 
-
-# Position image
 
 root.mainloop()

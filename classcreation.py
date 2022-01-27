@@ -109,7 +109,7 @@ class Deck():
 
     def reset(self):
         self.suits = ["Hearts", "Spades", "Diamonds", "Clubs"]
-        self.values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"]
+        self.values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"]
 
         # This creates the pack
 

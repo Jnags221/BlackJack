@@ -1,5 +1,6 @@
 import tkinter as tk
 import classcreation as cc
+from PIL import Image,ImageTk
 
 root = tk.Tk()
 
@@ -208,8 +209,9 @@ class Hand():
                           pady=10)
 
     def updateimages(self):
-        self.card1_image.config(text=f'card 1: {self.player.cards[0]}')
-        self.card2_image.config(text=f'card 2: {self.player.cards[1]}')
+
+        self.card1_image.config(text=self.player.cards[0])
+        self.card2_image.config(text=self.player.cards[1])
 
         # TODO: Change the .config to assign correct image file!
 
