@@ -29,6 +29,7 @@ class People():
         self.cards.append(card)
         self.cardsvalue += cardvalue
         self.cardsvaluelist.append(cardvalue)
+        print(self.cardsvalue)
 
     def Aces(self):
         count = 0

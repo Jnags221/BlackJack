@@ -1,8 +1,9 @@
 import tkinter
 from tkinter import *
 from PIL import Image,ImageTk
+# this root makes error write in coursework
 
-root = Tk()
+#root = Tk()
 def card_snipper():
     # Create a photoimage object of the image in the path
     image1 = Image.open('cards.png')
@@ -41,9 +42,7 @@ def card_snipper():
     return cards
 
     #
-    #cards["12 1"][0].place(x=10, y=100)
-
-    #cards["0-13 0-3"]
 
 
-root.mainloop()
+
+#root.mainloop()

@@ -1,7 +1,7 @@
 import tkinter as tk
 import classcreation as cc
 import gettingcard as gc
-from PIL import Image,ImageTk
+from PIL import Image, ImageTk
 
 root = tk.Tk()
 
@@ -124,6 +124,7 @@ class Window_One(tk.Frame):
         self.destroy()
         Menu(self.master)
 
+
 class Hand():
     def __init__(self, player, parent):
         # TODO: Store these tk objects that refer to specfic players in a way that means we can refer to them again later
@@ -131,101 +132,110 @@ class Hand():
         image1 = Image.open("cards.png")
 
         self.player = player
+        self.parent = parent
 
         print(player.playernum)
 
-        self.card1_image = tk.Label(parent.middle_frame,
-                                    text='Insert Image Card1',
+        self.card1_image = tk.Label(parent.middle_frame, bg='yellow', image=None)
+        self.balance_box = tk.Label(parent.bottom_frame,
+                                    text="{}: {}".format(
+                                        player.name, player.balance),
                                     bg='blue',
                                     fg='white',
-                                    font=('Times', 15),
-                                    image=None)
-
-        self.card2_image = tk.Label(parent.middle_frame,
-                               text='Insert Image Card2',
-                               bg='blue',
-                               fg='white',
-                               font=('Times', 15))
-        self.balance_box = tk.Label(parent.bottom_frame,
-                               text="{}: {}".format(
-                                   player.name, player.balance),
-                               bg='blue',
-                               fg='white',
-                               font=('Times', 15))
-        # bet_size_box = tk.Label(bottom_frame, text=player.balance, bg='blue', fg='white', font=('Times', 15))
+                                    font=('Times', 15))
         self.hit_button = tk.Button(parent.bottom_frame,
-                               text='HIT',
-                               bg='blue',
-                               fg='black',
-                               font=('Times', 15))
+                                    text='HIT',
+                                    bg='blue',
+                                    fg='black',
+                                    font=('Times', 15), command=self.hit)
         self.double_button = tk.Button(parent.bottom_frame,
-                                  text='DOUBLE',
-                                  bg='blue',
-                                  fg='black',
-                                  font=('Times', 15))
+                                       text='DOUBLE',
+                                       bg='blue',
+                                       fg='black',
+                                       font=('Times', 15))
         self.stand_button = tk.Button(parent.bottom_frame,
-                                 text='STAND',
-                                 bg='blue',
-                                 fg='black',
-                                 font=('Times', 15))
+                                      text='STAND',
+                                      bg='blue',
+                                      fg='black',
+                                      font=('Times', 15))
         self.split_button = tk.Button(parent.bottom_frame,
-                                 text='SPLIT',
-                                 bg='blue',
-                                 fg='black',
-                                 font=('Times', 15))
+                                      text='SPLIT',
+                                      bg='blue',
+                                      fg='black',
+                                      font=('Times', 15))
 
         self.card1_image.grid(row=0,
-                         column=self.player.position,
-                         rowspan=20,
-                         sticky='news',
-                         padx=10,
-                         pady=10)
-        self.card2_image.grid(row=0,
-                         column=self.player.position + 1,
-                         rowspan=20,
-                         sticky='news',
-                         padx=10,
-                         pady=10)
+                              column=self.player.position,
+                              rowspan=20,
+                              sticky='news',
+                              padx=10,
+                              pady=10)
         self.balance_box.grid(row=0,
-                         column=self.player.position,
-                         sticky='news',
-                         padx=10,
-                         pady=10)
+                              column=self.player.position,
+                              sticky='news',
+                              padx=10,
+                              pady=10)
         self.hit_button.grid(row=1,
-                        column=self.player.position,
-                        sticky='news',
-                        padx=10,
-                        pady=10)
+                             column=self.player.position,
+                             sticky='news',
+                             padx=10,
+                             pady=10)
         self.double_button.grid(row=1,
-                           column=self.player.position + 1,
-                           sticky='news',
-                           padx=10,
-                           pady=10)
+                                column=self.player.position + 1,
+                                sticky='news',
+                                padx=10,
+                                pady=10)
         self.stand_button.grid(row=2,
-                          column=self.player.position,
-                          sticky='news',
-                          padx=10,
-                          pady=10)
+                               column=self.player.position,
+                               sticky='news',
+                               padx=10,
+                               pady=10)
         self.split_button.grid(row=2,
-                          column=self.player.position + 1,
-                          sticky='news',
-                          padx=10,
-                          pady=10)
+                               column=self.player.position + 1,
+                               sticky='news',
+                               padx=10,
+                               pady=10)
+
+        self.bet_slider = tk.Scale(parent.bottom_frame,
+                                   from_=10,
+                                   to=self.player.balance,
+                                   orient=tk.HORIZONTAL,
+                                   bigincrement=10,
+                                   command=self.placebet)
+
+        self.bet_slider.grid(row=0,
+                             column=self.player.position + 1,
+                             sticky='news',
+                             padx=10,
+                             pady=10)
+
+    def forget_slider(self):
+        self.bet_slider.grid_forget()
+
+    def hit(self):
+        self.player.hit(self.parent.deck)
+        self.updateimages()
+
+    def placebet(self):
+        pass
 
     def updateimages(self):
         card_images = gc.card_snipper()
 
-        card_images[self.player.cards[0]][0].place(x=self.card1_image.winfo_rootx(), y=self.card1_image.winfo_rooty())
-        card2_xposition = int(self.card1_image.winfo_rootx()) + 79
-        card2_yposition = int(self.card1_image.winfo_rooty())
-        card_images[self.player.cards[1]][0].place(x=card2_xposition, y=card2_yposition)
+        card1_yposition = int(self.card1_image.winfo_rooty()) + 87
+        card_images[self.player.cards[0]][0].place(x=self.card1_image.winfo_rootx(), y=card1_yposition)
+
+        for i in range(1, len(self.player.cards)):
+            card2_xposition = int(self.card1_image.winfo_rootx()) + 30 * i
+            card2_yposition = int(self.card1_image.winfo_rooty()) + 87
+            card_images[self.player.cards[i]][0].place(x=card2_xposition, y=card2_yposition)
 
         # TODO sort out dealer card and then hit etc...
 
-        self.card1_image.destroy()
-        self.card2_image.destroy()
+        # self.card1_image.forget()
 
         print(f'Total: {self.player.cardsvalue}')
+
 
 class Window_Two(tk.Frame):
     def __init__(self, parent):
@@ -261,16 +271,16 @@ class Window_Two(tk.Frame):
 
         self.columnconfigure(0, weight=1)
 
-        deal_button = tk.Button(self.top_frame, text='DEAL', bg='blue', fg='white', font=('Times', 15),
+        self.deal_button = tk.Button(self.top_frame, text='DEAL', bg='blue', fg='black', font=('Times', 15),
                                 command=self.confirm_bet)
 
-        deal_button.grid(row=0,
+        self.deal_button.grid(row=0,
                          column=3,
                          sticky="e",
                          )
 
         self.players = []
-        self.bet_sliders = []
+        #self.bet_sliders = []
 
         self.hands = []
 
@@ -284,24 +294,7 @@ class Window_Two(tk.Frame):
             else:
                 player.position = (player.playernum + 1) * 2
 
-            # Trying to make the hands accessible
-
             self.hands.append(Hand(player, self))
-
-
-            self.bet_sliders.append(
-                tk.Scale(self.bottom_frame,
-                         from_=10,
-                         to=player.balance,
-                         orient=tk.HORIZONTAL,
-                         bigincrement=10,
-                         command=player.placebet))
-
-            self.bet_sliders[player.playernum].grid(row=0,
-                                                    column=player.position + 1,
-                                                    sticky='news',
-                                                    padx=10,
-                                                    pady=10)
 
             self.bottom_frame.columnconfigure(player.position, weight=1)
             self.bottom_frame.columnconfigure(player.position + 1, weight=1)
@@ -361,7 +354,6 @@ class Window_Two(tk.Frame):
         self.top_frame.columnconfigure(2, weight=1)
         self.top_frame.columnconfigure(3, weight=1, minsize=400)
 
-
     def menu(self):
         self.destroy()
         Menu(self.master)
@@ -373,8 +365,8 @@ class Window_Two(tk.Frame):
     def confirm_bet(self):
         # First we reset the sliders
 
-        for slider in self.bet_sliders:
-            slider.grid_forget()
+        for hand in self.hands:
+            hand.forget_slider()
 
         # Create and shuffle the deck
 
@@ -386,6 +378,9 @@ class Window_Two(tk.Frame):
             hand.player.initialcards(self.deck)
 
             hand.updateimages()
+
+        self.deal_button.grid_forget()
+
 
 
 
