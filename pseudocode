@@ -1,0 +1,53 @@
+FUNCTION Hit #Takes an input of the player decision and gives an extra card
+    playerdecision = INPUT ('Would you like to HIT')
+
+    LOOP UNTIL totalcardsvalue >= 21
+
+        IF playerdecision = TRUE:
+            playercards += nextcard
+            totalcardsvalue += nextcardvalue
+
+        ELSE:
+            pass
+
+FUNCTION Stand #Takes an input of the player decision and finishes their go
+    playerdecision = INPUT ('Would you like to STAND')
+
+    LOOP UNTIL totalcardsvalue >= 21
+
+        IF playerdecision = TRUE:
+            totalcardsvalue = finalcardsvalue
+
+        ELSE:
+            pass
+
+FUNCTION Double #Takes an input of the player decision and gives an extra card and doubles their bet size
+    IF numberofcards = 2:
+
+        playerdecision = INPUT ('Would you like to DOUBLE')
+
+        IF playerdecision = TRUE:
+            playercards += nextcard
+            totalcardsvalue += nextcardvalue
+            betsize = betsize*2
+            Stand()
+        ELSE:
+            pass
+
+    ELSE:
+        pass
+
+FUNCTION Split #Takes an input of the player decision and splits their two cards into two hands
+    IF numberofcards = 2 AND initialcardvalue1 == initialcardvalue2:
+
+        playerdecision = INPUT ('Would you like to SPLIT')
+
+        IF playerdecision = TRUE:
+            splitcards1 = playercard1 + nextcard
+            splitcards2 = playercard1 + (nextcard+1)
+            betsize = betsize*2
+        ELSE:
+            pass
+
+    ELSE:
+        pass

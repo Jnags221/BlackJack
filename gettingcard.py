@@ -17,7 +17,7 @@ def card_snipper():
             d = (i+1)*123
             cropped = image1.crop((a,b,c,d)) #a = top left b = bottom left c = top right d = bottom right
             test = ImageTk.PhotoImage(cropped)
-            label = tkinter.Label(image=test)
+            label = tkinter.Label(image=test, relief=RAISED)
             label.image = test
             if i == 0:
                 suit = str(i)

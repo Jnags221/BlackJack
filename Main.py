@@ -11,3 +11,5 @@ def round_creation():
 
     for i in range(numrounds):
         oc.game.round()
+
+round_creation()

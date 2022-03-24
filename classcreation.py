@@ -55,7 +55,7 @@ class Dealer(People):
 
 
 # This creates the Players
-
+#put playernum in init
 class Players(People):
 
     def __init__(self, name, playernum, balance=1000):
@@ -93,7 +93,7 @@ class Deck():
         self.pack = []
         for suit in range(len(self.suits)):
             for value in range(len(self.values)):
-                self.pack.append(self.values[value] + " of " + self.suits[suit])
+                self.pack.append(self.values[value] + " " + self.suits[suit])
 
         self.values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11, 2, 3, 4,
                        5, 6, 7, 8, 9, 10, 10, 10, 10, 11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]

@@ -157,7 +157,7 @@ class Hand():
                                       text='STAND',
                                       bg='blue',
                                       fg='black',
-                                      font=('Times', 15))
+                                      font=('Times', 15), command = self.stand)
         self.split_button = tk.Button(parent.bottom_frame,
                                       text='SPLIT',
                                       bg='blue',
@@ -180,12 +180,12 @@ class Hand():
                              sticky='news',
                              padx=10,
                              pady=10)
-        self.double_button.grid(row=1,
+        self.stand_button.grid(row=1,
                                 column=self.player.position + 1,
                                 sticky='news',
                                 padx=10,
                                 pady=10)
-        self.stand_button.grid(row=2,
+        self.double_button.grid(row=2,
                                column=self.player.position,
                                sticky='news',
                                padx=10,
@@ -210,11 +210,31 @@ class Hand():
                              pady=10)
 
     def forget_slider(self):
-        self.bet_slider.grid_forget()
+        self.bet_slider.grid_remove()
 
     def hit(self):
         self.player.hit(self.parent.deck)
         self.updateimages()
+        self.double_button.grid_remove()
+        self.split_button.grid_remove()
+
+    def stand(self):
+        self.stand_button.grid_remove()
+        self.hit_button.grid_remove()
+        self.double_button.grid_remove()
+        self.split_button.grid_remove()
+        # is this the last stand, if so dealer go
+        root.after(2000, print("BOO"))
+
+    def double(self):
+        self.player.hit(self.parent.deck)
+        self.updateimages()
+        self.stand_button.grid_remove()
+        self.hit_button.grid_remove()
+        self.double_button.grid_remove()
+        self.split_button.grid_remove()
+        self.betsize * 2
+
 
     def placebet(self):
         pass
@@ -229,6 +249,7 @@ class Hand():
             card2_xposition = int(self.card1_image.winfo_rootx()) + 30 * i
             card2_yposition = int(self.card1_image.winfo_rooty()) + 87
             card_images[self.player.cards[i]][0].place(x=card2_xposition, y=card2_yposition)
+
 
         # TODO sort out dealer card and then hit etc...
 
@@ -315,16 +336,6 @@ class Window_Two(tk.Frame):
                                bg='blue',
                                fg='white',
                                font=('Times', 15))
-        dealer_card1_image = tk.Label(self.top_frame,
-                                      text='Insert Image Card1',
-                                      bg='blue',
-                                      fg='white',
-                                      font=('Times', 15))
-        dealer_card2_image = tk.Label(self.top_frame,
-                                      text='Insert Image Card2',
-                                      bg='blue',
-                                      fg='white',
-                                      font=('Times', 15))
 
         menu_button.grid(row=0, column=0, sticky="nw")
         dealer_name.grid(row=0,
@@ -333,18 +344,6 @@ class Window_Two(tk.Frame):
                          sticky="news",
                          padx=10,
                          pady=10)
-        dealer_card1_image.grid(row=1,
-                                column=1,
-                                rowspan=20,
-                                sticky='news',
-                                padx=10,
-                                pady=10)
-        dealer_card2_image.grid(row=1,
-                                column=2,
-                                rowspan=20,
-                                sticky='news',
-                                padx=10,
-                                pady=10)
 
         self.top_frame.rowconfigure(0, weight=1)
         self.top_frame.rowconfigure(1, weight=1, minsize=210)
@@ -381,6 +380,7 @@ class Window_Two(tk.Frame):
 
         self.deal_button.grid_forget()
 
+        # PRINT DEALER CARDS
 
 
 
